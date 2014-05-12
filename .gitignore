@@ -1,0 +1,9 @@
+*.class
+*.log
+
+# Package Files #
+#*.jar
+
+# Otros a eliminar
+build/
+WebContent/VAADIN/widgetsets/
