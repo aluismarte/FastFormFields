@@ -6,11 +6,11 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.communication.StateChangeEvent;
-import com.vaadin.client.ui.AbstractComponentConnector;
+import com.vaadin.client.ui.textfield.TextFieldConnector;
 import com.vaadin.shared.ui.Connect;
 
 @Connect(IntegerTextField.class)
-public class IntegerTextFieldConnector extends AbstractComponentConnector {
+public class IntegerTextFieldConnector extends TextFieldConnector {
 
 	private static final long serialVersionUID = -8997123500147616264L;
 

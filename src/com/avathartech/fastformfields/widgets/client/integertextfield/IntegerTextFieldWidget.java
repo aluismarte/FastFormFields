@@ -1,8 +1,8 @@
 package com.avathartech.fastformfields.widgets.client.integertextfield;
 
-import com.google.gwt.user.client.ui.TextBox;
+import com.vaadin.client.ui.VTextField;
 
-public class IntegerTextFieldWidget extends TextBox {
+public class IntegerTextFieldWidget extends VTextField {
 
 	public static final String CLASSNAME = "integertextfield";
 

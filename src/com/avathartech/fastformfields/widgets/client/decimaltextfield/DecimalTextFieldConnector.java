@@ -6,14 +6,15 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.communication.StateChangeEvent;
-import com.vaadin.client.ui.AbstractComponentConnector;
+import com.vaadin.client.ui.textfield.TextFieldConnector;
 import com.vaadin.shared.ui.Connect;
 
 @Connect(DecimalTextField.class)
-public class DecimalTextFieldConnector extends AbstractComponentConnector {
+public class DecimalTextFieldConnector extends TextFieldConnector {
 
 	private static final long serialVersionUID = -491559284787322054L;
 	private boolean hasDot = false;
+	private boolean hasNum = false;
 	
 	public DecimalTextFieldConnector() {
 		getWidget().addKeyPressHandler(new KeyPressHandler() {
@@ -27,6 +28,8 @@ public class DecimalTextFieldConnector extends AbstractComponentConnector {
 				if ('.' == event.getCharCode() && hasDot) {
 					getWidget().cancelKey();
 				} else if ('.' != event.getCharCode() && !Character.isDigit(event.getCharCode())) {
+					getWidget().cancelKey();
+				} else if('.' == event.getCharCode() && hasDot && !hasNum) {
 					getWidget().cancelKey();
 				}
 			}

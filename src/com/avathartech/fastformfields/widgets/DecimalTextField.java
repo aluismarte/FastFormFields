@@ -43,6 +43,26 @@ public class DecimalTextField extends TextField {
 
 	@Override
 	public void setValue(String value) {
+		value = onlyDigitsAndOneDot(value);
 		getState().text = value;
+	}
+	
+	private String onlyDigitsAndOneDot(String value) {
+		boolean hasDot = false;
+		String digits = "";
+		for (int i = 0; i < value.length(); i++) {
+            char chrs = value.charAt(i);
+            if(chrs == '.' && hasDot) {
+            	continue;
+            } else if(chrs == '.' && !hasDot) {
+            	digits = digits + chrs;
+            	hasDot = true;
+            } else if ('.' != chrs && !Character.isDigit(chrs)) {
+				continue;
+			} else {
+				digits = digits + chrs;
+			}
+        }
+		return digits;
 	}
 }

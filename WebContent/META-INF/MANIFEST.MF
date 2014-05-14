@@ -2,10 +2,11 @@ Manifest-Version: 1.0
 Vaadin-License-Title: Apache License 2.0
 Implementation-Vendor: AvatharTech
 Implementation-Title: FastFormFields
-Implementation-Version: 0.0.1
+Implementation-Version: 0.1.4
+Vaadin-License-File: http://www.apache.org/licenses/LICENSE-2.0.html
 Implementation-Vendor-Id: com.avathartech.fastformfields
 Vaadin-Package-Version: 1
-Vaadin-License-File: http://www.apache.org/licenses/LICENSE-2.0.html
+Class-Path: 
 Vaadin-Widgetsets: com.avathartech.fastformfields.widgets.Fastformfiel
  dsWidgetset
-Class-Path: 
+

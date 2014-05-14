@@ -6,6 +6,8 @@ import com.avathartech.fastformfields.widgets.DecimalTextField;
 import com.avathartech.fastformfields.widgets.IntegerTextField;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
@@ -28,6 +30,21 @@ public class FastformfieldsUI extends UI {
 		VerticalLayout vl = new VerticalLayout();
 		vl.addComponent(itf);
 		vl.addComponent(dtf);
+		
+		dtf.setRequired(true);
+		itf.setRequired(true);
+		
+		itf.addTextChangeListener(new TextChangeListener() {
+			
+			@Override
+			public void textChange(TextChangeEvent event) {
+				System.out.println("Hola");
+			}
+		});
+		
+		itf.setValue("sdsd1ad2as3.4sda");
+		dtf.setValue("df21.2asd.asa1.12as");
+		dtf.setReadOnly(true);
 		
 		setContent(vl);
 	}

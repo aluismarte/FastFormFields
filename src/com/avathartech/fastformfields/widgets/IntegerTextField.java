@@ -43,6 +43,19 @@ public class IntegerTextField extends TextField {
 
 	@Override
 	public void setValue(String value) {
+		value = onlyDigits(value);
 		getState().text = value;
 	}
+	
+	private String onlyDigits(String value) {
+		String digits = "";
+		for (int i = 0; i < value.length(); i++) {
+            char chrs = value.charAt(i);
+            if (Character.isDigit(chrs)) {
+                digits = digits + chrs;
+            }
+        }
+		return digits;
+	}
+
 }
