@@ -15,7 +15,7 @@ public class DecimalTextFieldConnector extends TextFieldConnector {
 	private static final long serialVersionUID = -491559284787322054L;
 	private boolean hasDot = false;
 	private boolean hasNum = false;
-	
+
 	public DecimalTextFieldConnector() {
 		getWidget().addKeyPressHandler(new KeyPressHandler() {
 			@Override
@@ -29,7 +29,7 @@ public class DecimalTextFieldConnector extends TextFieldConnector {
 					getWidget().cancelKey();
 				} else if ('.' != event.getCharCode() && !Character.isDigit(event.getCharCode())) {
 					getWidget().cancelKey();
-				} else if('.' == event.getCharCode() && hasDot && !hasNum) {
+				} else if ('.' == event.getCharCode() && hasDot && !hasNum) {
 					getWidget().cancelKey();
 				}
 			}
@@ -59,4 +59,3 @@ public class DecimalTextFieldConnector extends TextFieldConnector {
 	}
 
 }
-

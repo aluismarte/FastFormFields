@@ -26,26 +26,30 @@ public class FastformfieldsUI extends UI {
 	protected void init(VaadinRequest request) {
 		DecimalTextField dtf = new DecimalTextField("Con punto");
 		IntegerTextField itf = new IntegerTextField("Sin punto");
-		
+
 		VerticalLayout vl = new VerticalLayout();
 		vl.addComponent(itf);
 		vl.addComponent(dtf);
-		
+
 		dtf.setRequired(true);
 		itf.setRequired(true);
-		
+
 		itf.addTextChangeListener(new TextChangeListener() {
-			
+
 			@Override
 			public void textChange(TextChangeEvent event) {
 				System.out.println("Hola");
 			}
 		});
-		
+
 		itf.setValue("sdsd1ad2as3.4sda");
 		dtf.setValue("df21.2asd.asa1.12as");
 		dtf.setReadOnly(true);
-		
+
+		itf.setValue("2265");
+
+		System.out.println(itf.getValue());
+
 		setContent(vl);
 	}
 
