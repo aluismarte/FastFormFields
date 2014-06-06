@@ -14,15 +14,23 @@ public class IntegerTextFieldConnector extends TextFieldConnector {
 
 	private static final long serialVersionUID = -8997123500147616264L;
 
+	private KeyPressHandler keyChecker;
+	private int digitsize = 0;
+
 	public IntegerTextFieldConnector() {
-		getWidget().addKeyPressHandler(new KeyPressHandler() {
+		keyChecker = new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
 				if (!Character.isDigit(event.getCharCode())) {
 					getWidget().cancelKey();
 				}
+				digitsize = 0;
+				verifyValue();
+				checkUpDigitLimit(event);
 			}
-		});
+		};
+
+		getWidget().addKeyPressHandler(keyChecker);
 	}
 
 	@Override
@@ -45,6 +53,20 @@ public class IntegerTextFieldConnector extends TextFieldConnector {
 		super.onStateChanged(stateChangeEvent);
 		final String text = getState().text;
 		getWidget().setText(text);
+	}
+
+	private void checkUpDigitLimit(KeyPressEvent event) {
+		if (getState().digitLimit > 0) {
+			if (digitsize >= getState().digitLimit) {
+				getWidget().cancelKey();
+			} else {
+				digitsize += 1;
+			}
+		}
+	}
+
+	private void verifyValue() {
+		digitsize = getWidget().getValue().length();
 	}
 
 }

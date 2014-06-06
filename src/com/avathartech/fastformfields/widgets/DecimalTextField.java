@@ -66,4 +66,38 @@ public class DecimalTextField extends TextField {
 		}
 		return digits;
 	}
+
+	/**
+	 * Set limit of digits on Decimal Precision.
+	 * 
+	 * Set 0 to unlimit
+	 */
+	public void setDecimalPresicion(int digits) {
+		if (digits < 0) {
+			getState().downDigitLimit = -1 * digits;
+		} else {
+			getState().downDigitLimit = digits;
+		}
+	}
+
+	/**
+	 * Set limit of digits on Integer Precision.
+	 * 
+	 * Set 0 to unlimit
+	 */
+	public void setIntegerPresicion(int digits) {
+		if (digits < 0) {
+			getState().upDigitLimit = -1 * digits;
+		} else {
+			getState().upDigitLimit = digits;
+		}
+	}
+
+	public int getDecimalPresicion() {
+		return getState().downDigitLimit;
+	}
+
+	public int getIntegerPresicion() {
+		return getState().upDigitLimit;
+	}
 }

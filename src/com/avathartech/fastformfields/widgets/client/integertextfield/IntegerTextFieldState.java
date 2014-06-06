@@ -4,4 +4,6 @@ import com.vaadin.shared.ui.textfield.AbstractTextFieldState;
 
 public class IntegerTextFieldState extends AbstractTextFieldState {
 	private static final long serialVersionUID = -2755500639905292971L;
+	
+	public int digitLimit = 0; // No limit if equal 0
 }

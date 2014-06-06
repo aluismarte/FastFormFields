@@ -44,11 +44,17 @@ public class FastformfieldsUI extends UI {
 
 		itf.setValue("sdsd1ad2as3.4sda");
 		dtf.setValue("df21.2asd.asa1.12as");
-		dtf.setReadOnly(true);
 
 		itf.setValue("2265");
+//		itf.setReadOnly(true);
+		itf.setIntegerPresicion(6);
 
 		System.out.println(itf.getValue());
+		
+		dtf.setDecimalPresicion(5);
+		System.out.println(dtf.getDecimalPresicion());
+		dtf.setIntegerPresicion(4);
+		System.out.println(dtf.getIntegerPresicion());
 
 		setContent(vl);
 	}

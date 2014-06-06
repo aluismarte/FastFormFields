@@ -58,5 +58,22 @@ public class IntegerTextField extends TextField {
 		}
 		return digits;
 	}
+	
+	/**
+	 * Set limit of digits on Integer Precision.
+	 * 
+	 * Set 0 to unlimit
+	 */
+	public void setIntegerPresicion(int digits) {
+		if (digits < 0) {
+			getState().digitLimit = -1 * digits;
+		} else {
+			getState().digitLimit = digits;
+		}
+	}
+	
+	public int getIntegerPresicion() {
+		return getState().digitLimit;
+	}
 
 }
