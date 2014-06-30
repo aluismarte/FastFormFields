@@ -11,10 +11,7 @@ import com.vaadin.shared.ui.Connect;
 public class VehicleIDTextFieldConnector extends TextFieldConnector {
 
 	private static final long serialVersionUID = 4362184367128516660L;
-	
-	int[] values = { 1, 2, 3, 4, 5, 6, 7, 8, 0, 1, 2, 3, 4, 5, 0, 7, 0, 9, 2, 3, 4, 5, 6, 7, 8, 9 };
-    int[] weights = { 8, 7, 6, 5, 4, 3, 2, 10, 0, 9, 8, 7, 6, 5, 4, 3, 2 };
-	
+
 	public VehicleIDTextFieldConnector() {
 	}
 
