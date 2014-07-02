@@ -4,6 +4,7 @@ import javax.servlet.annotation.WebServlet;
 
 import com.avathartech.fastformfields.widgets.DecimalTextField;
 import com.avathartech.fastformfields.widgets.IntegerTextField;
+import com.avathartech.fastformfields.widgets.UpperTextField;
 import com.avathartech.fastformfields.widgets.VehicleIDTextField;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -30,7 +31,8 @@ public class FastformfieldsUI extends UI {
 	protected void init(VaadinRequest request) {
 		DecimalTextField dtf = new DecimalTextField("Con punto");
 		IntegerTextField itf = new IntegerTextField("Sin punto");
-		final VehicleIDTextField vidtf = new VehicleIDTextField();
+		final VehicleIDTextField vidtf = new VehicleIDTextField("Chasis");
+		UpperTextField utf = new UpperTextField("Upper");
 
 		Button button = new Button("Check Vehicle ID");
 		button.addClickListener(new ClickListener() {
@@ -49,6 +51,7 @@ public class FastformfieldsUI extends UI {
 		VerticalLayout vl = new VerticalLayout();
 		vl.addComponent(itf);
 		vl.addComponent(dtf);
+		vl.addComponent(utf);
 		vl.addComponent(vidtf);
 		vl.addComponent(button);
 
@@ -77,6 +80,8 @@ public class FastformfieldsUI extends UI {
 		dtf.setIntegerPresicion(4);
 		System.out.println(dtf.getIntegerPresicion());
 
+		utf.setValue("asd asdsad");
+		
 		setContent(vl);
 	}
 
