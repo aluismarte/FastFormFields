@@ -7,4 +7,7 @@ public class DecimalTextFieldState extends AbstractTextFieldState {
 	
 	public int upDigitLimit = 0; // No limit if equal 0
 	public int downDigitLimit = 0; // No limit if equal 0
+	public int groupingSize = 3;
+	public String groupingSeparator = ",";
+	public String decimalSeparator = ".";
 }

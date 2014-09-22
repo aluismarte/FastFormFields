@@ -20,13 +20,11 @@ public class UpperTextFieldConnector extends TextFieldConnector {
 		keyChecker = new KeyUpHandler() {
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
-				getState().text = getWidget().getValue();
-				getWidget().setValue(getWidget().getValue());
+				
 			}
 		};
-
+		
 		getWidget().addKeyUpHandler(keyChecker);
-		getWidget().setImmediate(true);
 	}
 
 	@Override
@@ -47,9 +45,10 @@ public class UpperTextFieldConnector extends TextFieldConnector {
 	@Override
 	public void onStateChanged(StateChangeEvent stateChangeEvent) {
 		super.onStateChanged(stateChangeEvent);
-		final String text = getState().text;
+		String text = getWidget().getValue();
+		text += getState().text;
+		text.toUpperCase();
+		getState().text = text;
 		getWidget().setText(text);
 	}
-
 }
-

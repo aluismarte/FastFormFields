@@ -8,15 +8,16 @@ import com.avathartech.fastformfields.widgets.UpperTextField;
 import com.avathartech.fastformfields.widgets.VehicleIDTextField;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.data.Property;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 @SuppressWarnings("serial")
 @Theme("fastformfields")
@@ -29,10 +30,69 @@ public class FastformfieldsUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-		DecimalTextField dtf = new DecimalTextField("Con punto");
-		IntegerTextField itf = new IntegerTextField("Sin punto");
+		final DecimalTextField dtf = new DecimalTextField("DecimalTextField:");
+		dtf.setRequired(true);
+		dtf.setValue("");
+		dtf.setImmediate(true);
+		dtf.setIntegerPresicion(7);
+		dtf.setDecimalPresicion(2);
+		dtf.setGroupingSize(3);
+		dtf.setGroupingSeparator(",");
+		dtf.setDecimalSeparator(".");
+		dtf.addValueChangeListener(new Property.ValueChangeListener() {
+			@Override
+			public void valueChange(Property.ValueChangeEvent event) {
+				System.out.println("=======================================================");
+				System.out.println("Digitos antes del punto: " + dtf.getState().upDigitLimit);
+				System.out.println("Digitos despues del punto: " + dtf.getState().downDigitLimit);
+				System.out.println("Grouping size: " + dtf.getState().groupingSize);
+				System.out.println("Thousand separator: " + dtf.getState().groupingSeparator);
+				System.out.println("Decimal separator: " + dtf.getState().decimalSeparator);
+				System.out.println("=======================================================");
+
+				String format1 = "";
+				int cont = 0;
+				for (int i = dtf.getState().upDigitLimit; i > 0; i--) {
+					format1 += "#";
+					cont++;
+					if (cont == dtf.getState().groupingSize) {
+						format1 += dtf.getState().groupingSeparator;
+						cont = 0;
+					}
+				}
+
+				String newString = "";
+				for (int i = format1.length() - 1; i >= 0; i--) {
+					newString += format1.charAt(i);
+				}
+
+				String format2 = "";
+				for (int k = 0; k < dtf.getState().downDigitLimit; k++) {
+					format2 += "#";
+				}
+
+				String formato = newString + dtf.getState().decimalSeparator + format2;
+				// dtf.setValue(String.format(formato, dtf.getValue()));
+				System.out.println(formato);
+			}
+		});
+
+		IntegerTextField itf = new IntegerTextField("IntegerTextfield:");
+		itf.setRequired(true);
+		itf.setValue("2265");
+		itf.setIntegerPresicion(6);
+		itf.addTextChangeListener(new TextChangeListener() {
+			@Override
+			public void textChange(TextChangeEvent event) {
+				System.out.println("Hola");
+			}
+		});
+
+		UpperTextField utf = new UpperTextField("UpperTextField:");
+		utf.setImmediate(true);
+		utf.setValue("asd asdsad");
+
 		final VehicleIDTextField vidtf = new VehicleIDTextField("Chasis");
-		UpperTextField utf = new UpperTextField("Upper");
 
 		Button button = new Button("Check Vehicle ID");
 		button.addClickListener(new ClickListener() {
@@ -55,34 +115,6 @@ public class FastformfieldsUI extends UI {
 		vl.addComponent(vidtf);
 		vl.addComponent(button);
 
-		dtf.setRequired(true);
-		itf.setRequired(true);
-
-		itf.addTextChangeListener(new TextChangeListener() {
-
-			@Override
-			public void textChange(TextChangeEvent event) {
-				System.out.println("Hola");
-			}
-		});
-
-		itf.setValue("sdsd1ad2as3.4sda");
-		dtf.setValue("df21.2asd.asa1.12as");
-
-		itf.setValue("2265");
-		// itf.setReadOnly(true);
-		itf.setIntegerPresicion(6);
-
-		System.out.println(itf.getValue());
-
-		dtf.setDecimalPresicion(5);
-		System.out.println(dtf.getDecimalPresicion());
-		dtf.setIntegerPresicion(4);
-		System.out.println(dtf.getIntegerPresicion());
-
-		utf.setValue("asd asdsad");
-		
 		setContent(vl);
 	}
-
 }

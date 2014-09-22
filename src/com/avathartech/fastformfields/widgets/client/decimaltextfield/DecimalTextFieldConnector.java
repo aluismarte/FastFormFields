@@ -27,10 +27,66 @@ public class DecimalTextFieldConnector extends TextFieldConnector {
 		keyChecker = new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
-				checkValue(event);
+				cancelInvalidKeyPressed(event);
+				formatearValor();
 			}
 		};
-		getWidget().addKeyPressHandler(keyChecker);
+		getWidget().addKeyPressHandler(keyChecker);	
+	}
+	
+	private void formatearValor(){
+		String valor = getWidget().getValue();
+		valor += getState().text;	
+		getWidget().setValue(valor);		
+	}
+
+	private void cancelInvalidKeyPressed(KeyPressEvent event) {
+		if (getWidget().getText().contains(getState().decimalSeparator)) {
+			hasDot = true;
+		} else {
+			hasDot = false;
+		}
+
+		// Si el caracter es un punto y ya tiene un punto, lo cancelamos...
+		if (getState().decimalSeparator.charAt(0) == event.getCharCode()
+				&& hasDot) {
+			getWidget().cancelKey();
+		} else if (getState().decimalSeparator.charAt(0) != event.getCharCode()
+				&& getState().groupingSeparator.charAt(0) != event
+						.getCharCode()
+				&& !Character.isDigit(event.getCharCode())) {
+			// Si el caracter es diferente de un punto o comma y el caracter no
+			// es un numero, lo cancelamos
+			getWidget().cancelKey();
+		} else if (getState().decimalSeparator.charAt(0) == event.getCharCode()
+				&& hasDot && !hasNum) {
+			// Si el caracter es un punto, pero no ha insertado un numero, lo
+			// cancelamos
+			getWidget().cancelKey();
+		}
+
+		digitUpSize = 0;
+		digitDownSize = 0;
+		verifyValues();
+
+		if (hasDot) {
+			checkDownDigitLimit(event);
+		} else {
+			checkUpDigitLimit(event);
+		}
+		
+		String format = "";
+		for(int i = 0; i < getState().upDigitLimit; i++){
+			for(int j = 0; j < getState().groupingSize; j++){
+				format += "#";
+			}
+			format += getState().groupingSeparator;
+		}
+		format += getState().decimalSeparator;
+		for(int k=0; k < getState().downDigitLimit; k++){
+			format += "#";
+		}		
+		System.out.println("Formato: " + format);
 	}
 
 	@Override
@@ -51,36 +107,41 @@ public class DecimalTextFieldConnector extends TextFieldConnector {
 	@Override
 	public void onStateChanged(StateChangeEvent stateChangeEvent) {
 		super.onStateChanged(stateChangeEvent);
-		final String text = getState().text;
+		
+		String format = "";
+		for(int i = 0; i < getState().upDigitLimit; i++){
+			for(int j = 0; j < getState().groupingSize; j++){
+				format += "#";
+			}
+			format += getState().groupingSeparator;
+		}
+		format += getState().decimalSeparator;
+		for(int k=0; k < getState().downDigitLimit; k++){
+			format += "#";
+		}		
+		System.out.println("Formato: " + format);
+		
+		final String text = getState().text;		
 		getWidget().setText(text);
 	}
 
-	private void checkValue(KeyPressEvent event) {
-		if (getWidget().getText().contains(".")) {
-			hasDot = true;
-		} else {
-			hasDot = false;
-		}
-		if ('.' == event.getCharCode() && hasDot) {
-			getWidget().cancelKey();
-		} else if ('.' != event.getCharCode() && !Character.isDigit(event.getCharCode())) {
-			getWidget().cancelKey();
-		} else if ('.' == event.getCharCode() && hasDot && !hasNum) {
-			getWidget().cancelKey();
-		}
-		digitUpSize = 0;
-		digitDownSize = 0;
-		verifyValues();
-		if (hasDot) {
-			checkDownDigitLimit(event);
-		} else {
-			checkUpDigitLimit(event);
-		}
-	}
+	/*
+	 * private void checkValue(KeyPressEvent event) { if
+	 * (getWidget().getText().contains(".")) { hasDot = true; } else { hasDot =
+	 * false; } if ('.' == event.getCharCode() && hasDot) {
+	 * getWidget().cancelKey(); } else if ('.' != event.getCharCode() &&
+	 * !Character.isDigit(event.getCharCode())) { getWidget().cancelKey(); }
+	 * else if ('.' == event.getCharCode() && hasDot && !hasNum) {
+	 * getWidget().cancelKey(); } digitUpSize = 0; digitDownSize = 0;
+	 * verifyValues(); if (hasDot) { checkDownDigitLimit(event); } else {
+	 * checkUpDigitLimit(event); } }
+	 */
 
 	private void checkUpDigitLimit(KeyPressEvent event) {
 		if (getState().upDigitLimit > 0) {
-			if ('.' != event.getCharCode()) {
+			if (getState().decimalSeparator.charAt(0) != event.getCharCode()
+					&& getState().groupingSeparator.charAt(0) != event
+							.getCharCode()) {
 				if (digitUpSize >= getState().upDigitLimit) {
 					getWidget().cancelKey();
 				} else {
@@ -106,10 +167,22 @@ public class DecimalTextFieldConnector extends TextFieldConnector {
 		if (t.length() > 0) {
 			for (int i = 0; i < t.length(); i++) {
 				char chrs = t.charAt(i);
-				if (chrs == '.') {
+
+				// Si el caracter es un separador de decimales, continuamos, no
+				// la contamos en la cantidad de digitos despues del punto.
+				if (chrs == getState().decimalSeparator.charAt(0)) {
 					hasDot = true;
 					continue;
 				}
+
+				// Si el caracter es una comma, continuamos, no la contamos en
+				// la cantidad de digitos
+				if (chrs == getState().groupingSeparator.charAt(0)) {
+					continue;
+				}
+
+				// Dependiendo de si ya paso el punto, sumamos el total de
+				// digitos despues del punto y antes del punto.
 				if (hasDot) {
 					digitDownSize += 1;
 				} else {

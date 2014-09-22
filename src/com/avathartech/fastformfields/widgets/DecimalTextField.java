@@ -100,4 +100,42 @@ public class DecimalTextField extends TextField {
 	public int getIntegerPresicion() {
 		return getState().upDigitLimit;
 	}
+	
+	/**
+	 * Set the grouping size
+	 *  
+	 */
+	public void setGroupingSize(int digits) {
+		if (digits < 0) {
+			getState().groupingSize = digits;
+		}
+	}
+	
+	public int getGroupingSize() {
+		return getState().groupingSize;
+	}
+	
+	/**
+	 * Set the grouping separator
+	 *  
+	 */
+	public void setGroupingSeparator(String separator) {
+			getState().groupingSeparator = separator;
+	}
+	
+	public String getGroupingSeparator() {
+		return getState().groupingSeparator;
+	}
+	
+	/**
+	 * Set the decimal separator
+	 *  
+	 */
+	public void setDecimalSeparator(String separator) {
+			getState().decimalSeparator = separator;
+	}
+	
+	public String getDecimalSeparator() {
+		return getState().decimalSeparator;
+	}
 }
